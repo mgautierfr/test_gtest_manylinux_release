@@ -21,6 +21,10 @@ jobs:
         run: |
           python3 -m pip install meson ninja
 
+      - name: Print gcc version
+        run: |
+          gcc -v
+
       - name: Test
         run: |
           meson . build -Dbuildtype=${{ matrix.buildtype }}
@@ -43,6 +47,10 @@ jobs:
       - name: Install deps
         run: |
           pipx install meson ninja
+
+      - name: Print gcc version
+        run: |
+          gcc -v
 
       - name: Test
         run: |
