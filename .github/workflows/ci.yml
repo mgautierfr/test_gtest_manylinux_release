@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push
+
+
+jobs:
+  Native:
+    strategy:
+      fail-fast: false
+      matrix:
+        buildtype: ["debug", "release"]
+
+    runs-on: 'ubuntu-latest'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.4
+
+      - name: Install deps
+        run: |
+          python3 -m pip install meson ninja
+
+      - name: Test
+        run: |
+          meson . build -Dbuildtype=${{ matrix.buildtype }}
+          cd build
+          meson test
