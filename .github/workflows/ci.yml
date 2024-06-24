@@ -26,3 +26,26 @@ jobs:
           meson . build -Dbuildtype=${{ matrix.buildtype }}
           cd build
           meson test
+  ManyLinux:
+    strategy:
+      fail-fast: false
+      matrix:
+        buildtype: ["debug", "release"]
+
+    runs-on: 'ubuntu-latest'
+    container:
+      image: "quay.io/pypa/manylinux_2_28_x86_64" 
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.4
+
+      - name: Install deps
+        run: |
+          pipx install meson ninja
+
+      - name: Test
+        run: |
+          meson . build -Dbuildtype=${{ matrix.buildtype }}
+          cd build
+          meson test
